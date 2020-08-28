@@ -1,17 +1,80 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+
+const FirstChildOnly = ({ children }) => {
+    return (
+        <div>
+            {React.Children.toArray(children).slice(0, 1)}
+        </div>
+    )
+
+}
+
+const LastChildOnly = ({ children }) => {
+    return (
+        <div>
+            {React.Children.toArray(children).slice(-1)[0] || null}
+        </div>
+    )
+}
+
+const Head = ({number, children})=>{
+    return(
+        <div>
+            {React.Children.toArray(children).slice(0,number) || null}
+        </div>
+    )
+
+}
+
+const Tail=({numb,children})=>{
+    return(
+        <div>
+            {React.Children.toArray(children).slice(-numb) || null}
+        </div>
+    )
+}
+
+
+function Demo() {
+    return (
+        <>
+            <FirstChildOnly>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+            </FirstChildOnly>
+            <br />
+            <LastChildOnly>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+            </LastChildOnly>
+            <br />
+            <Head number={3}>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
+            </Head>
+            <br />
+            <Tail numb={3}>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
+            </Tail>
+        </>
+    )
+}
+
+
+ReactDOM.render(<Demo />, document.querySelector('#root'));
